@@ -1,19 +1,19 @@
 package stepDefinitions;
 
 import core.DriverFactory;
-import org.junit.After;
-import org.junit.Before;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 
 public class Hooks {
     DriverFactory driverFactory = new DriverFactory();
 
     @Before
-    public void inicializarDriver(){
+    public void inicializarDriver() {
         driverFactory.inicializarDriver();
     }
 
     @After
-    public void eliminarDriver(){
+    public void eliminarDriver() {
         driverFactory.getDriver().quit();
     }
 }
