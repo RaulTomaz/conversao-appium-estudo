@@ -14,6 +14,8 @@ public class DriverFactory {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("deviceName", "Nexus");
+        capabilities.setCapability("noReset", "false");
+        capabilities.setCapability("fullReset", "false");
         capabilities.setCapability("appPackage", "com.ba.universalconverter");
         capabilities.setCapability("appActivity", "com.ba.universalconverter.MainConverterActivity");
         try{
