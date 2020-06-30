@@ -9,7 +9,8 @@ import static org.junit.Assert.assertEquals;
 public class ConversorScreen extends CommonsBasePage {
 
     public void validaConversorCarregado(){
-        assertTrue(getDriver().findElement(MobileBy.AccessibilityId("Gaveta de navegação abrir")).isDisplayed());
+        validarElementoApareceuNaTela(MobileBy.AccessibilityId("Gaveta de navegação abrir"));
+//        assertTrue(getDriver().findElement(MobileBy.AccessibilityId("Gaveta de navegação abrir")).isDisplayed());
     }
 
     public void clicarSpinnerEsquerdo(){
@@ -22,19 +23,22 @@ public class ConversorScreen extends CommonsBasePage {
 
     public void selecionarOpcaoMedida(String medida){
         scrollAteElemento(0.10, 0.90);
-        getDriver().findElement(MobileBy.xpath("//android.widget.TextView[@text='"+medida+"']")).click();
+        clicarElemento(MobileBy.xpath("//android.widget.TextView[@text='"+medida+"']"));
+//        getDriver().findElement(MobileBy.xpath("//android.widget.TextView[@text='"+medida+"']")).click();
     }
 
     public void digitarValorTeclado(String numero){
         for(int i = 0; i < numero.length(); i++)
         {
-            getDriver().findElement(MobileBy.xpath("//android.widget.Button[@text='"+numero.charAt(i)+"']")).click();
+            clicarElemento(MobileBy.xpath("//android.widget.Button[@text='"+numero.charAt(i)+"']"));
+//            getDriver().findElement(MobileBy.xpath("//android.widget.Button[@text='"+numero.charAt(i)+"']")).click();
         }
     }
 
     public void validarConversaoSucesso(String valorEsperado){
-        String valorConvertido = getDriver().findElement(MobileBy.id("target_value")).getText();
-        assertEquals(valorEsperado, valorConvertido);
+        validartextoIgual(valorEsperado, getDriver().findElement(MobileBy.id("target_value")).getText());
+//        String valorConvertido = getDriver().findElement(MobileBy.id("target_value")).getText();
+//        assertEquals(valorEsperado, valorConvertido);
     }
 
 }

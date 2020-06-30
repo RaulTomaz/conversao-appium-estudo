@@ -10,5 +10,5 @@
     Dado que o aplicativo esta na tela de conversao
     Quando seleciono a opcao de centimetros
     E seleciono a opcao de metros
-    E digito mil pelo teclado de numeros
-    Entao a conversao de centimetros para metros e exibida com sucesso
+    E digito "1000" pelo teclado de numeros
+    Entao a conversao de centimetros para metros e exibida com o valor "10"

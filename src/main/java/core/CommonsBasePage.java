@@ -1,14 +1,23 @@
 package core;
 
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertTrue;
 
 public class CommonsBasePage extends DriverFactory{
+    WebDriverWait wait = new WebDriverWait(getDriver(), TimeUnit.SECONDS.toSeconds(8));
 
     public void clicarElemento(By by){
-        getDriver().findElement(by).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).click();
     }
 
     public void scrollAteElemento(double porcentagemInicialY, double porcentagemFinalY){
@@ -18,6 +27,15 @@ public class CommonsBasePage extends DriverFactory{
         int endY = (int) (size.height * porcentagemFinalY);
         PointOption<?> point = new PointOption<>();
         new TouchAction<>(getDriver()).press(point.withCoordinates(x, startY)).moveTo(point.withCoordinates(x, endY)).release().perform();
+    }
+
+    public void validarElementoApareceuNaTela(By by){
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(by)).isDisplayed());
+//        assertTrue(getDriver().findElement(MobileBy.AccessibilityId("Gaveta de navegação abrir")).isDisplayed());
+    }
+
+    public void validartextoIgual(String textoAtual, String textoEsperado){
+        Assert.assertEquals(textoEsperado, textoAtual);
     }
 
 }
