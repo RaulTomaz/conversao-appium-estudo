@@ -18,7 +18,7 @@ import java.util.Date;
 public class Hooks {
     DriverFactory driverFactory = new DriverFactory();
     WordEvidence wordEvidence = new WordEvidence();
-    DateFormat dataEvidencia = new SimpleDateFormat("dd-MM-yyy_HH:mm:ss");
+    DateFormat dataEvidencia = new SimpleDateFormat("dd-MM-yyy_HH_mm_ss");
 
     @Before
     public void inicializarDriver() {
