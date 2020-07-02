@@ -4,9 +4,8 @@ import core.DriverFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.wp.usermodel.HeaderFooterType;
+import org.apache.poi.xwpf.usermodel.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
@@ -15,12 +14,23 @@ import java.io.*;
 public class WordEvidence extends DriverFactory {
 
     XWPFDocument wordEvidence = new XWPFDocument();
+    XWPFHeader cabecalho = null;
+    XWPFParagraph paragrafo = null;
+    XWPFRun run = null;
 
 
     public void criandoParagrafo(){
-        XWPFParagraph paragraph = wordEvidence.createParagraph();
-        XWPFRun run = paragraph.createRun();
-        run.setText("teste");
+        paragrafo = wordEvidence.createParagraph();
+        run = paragrafo.createRun();
+    }
+
+    public void criandoCabecalho() throws Exception{
+        cabecalho = wordEvidence.createHeader(HeaderFooterType.DEFAULT);
+        paragrafo = cabecalho.createParagraph();
+        paragrafo.setAlignment(ParagraphAlignment.RIGHT);
+        run = paragrafo.createRun();
+        FileInputStream teste = new FileInputStream("/Users/rautomaz/Desktop/logo.png");
+        run.addPicture(teste, XWPFDocument.PICTURE_TYPE_PNG, "teste", Units.toEMU(50), Units.toEMU(50));
     }
 
     public void salvaDocumento(String nomeDocumento) throws FileNotFoundException, IOException {

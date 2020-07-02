@@ -21,9 +21,10 @@ public class Hooks {
     DateFormat dataEvidencia = new SimpleDateFormat("dd-MM-yyy_HH_mm_ss");
 
     @Before
-    public void inicializarDriver() {
+    public void inicializarDriver() throws Exception{
         driverFactory.inicializarDriver();
         wordEvidence.criandoParagrafo();
+        wordEvidence.criandoCabecalho();
     }
 
     @After
