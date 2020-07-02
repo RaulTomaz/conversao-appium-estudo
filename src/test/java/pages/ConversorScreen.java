@@ -2,6 +2,7 @@ package pages;
 
 import core.CommonsBasePage;
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.MobileElement;
 
 public class ConversorScreen extends CommonsBasePage {
 
