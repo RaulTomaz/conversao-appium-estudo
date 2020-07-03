@@ -18,19 +18,28 @@ public class WordEvidence extends DriverFactory {
     XWPFParagraph paragrafo = null;
     XWPFRun run = null;
 
-
-    public void criandoParagrafo(){
-        paragrafo = wordEvidence.createParagraph();
+    public void criandoCabecalho(){
+        cabecalho = wordEvidence.createHeader(HeaderFooterType.DEFAULT);
+        paragrafo = cabecalho.createParagraph();
         run = paragrafo.createRun();
     }
 
-    public void criandoCabecalho() throws Exception{
-        cabecalho = wordEvidence.createHeader(HeaderFooterType.DEFAULT);
-        paragrafo = cabecalho.createParagraph();
+    public void inserindoConteudoCabecalho() throws Exception{
         paragrafo.setAlignment(ParagraphAlignment.RIGHT);
+        FileInputStream teste = new FileInputStream("src/test/resources/evidencias/support/logo.png");
+        run.addPicture(teste, XWPFDocument.PICTURE_TYPE_PNG, "teste", Units.toEMU(80), Units.toEMU(50));
+    }
+
+    public void quebrandoParagrafo(){
+        run.addBreak();
+    }
+
+    public void criandoTituloDocumento(){
+        paragrafo = wordEvidence.createParagraph();
         run = paragrafo.createRun();
-        FileInputStream teste = new FileInputStream("/Users/rautomaz/Desktop/logo.png");
-        run.addPicture(teste, XWPFDocument.PICTURE_TYPE_PNG, "teste", Units.toEMU(50), Units.toEMU(50));
+        paragrafo.setAlignment(ParagraphAlignment.CENTER);
+        run.setText("Grupo de estudos Appium com Java");
+        run.setBold(true);
     }
 
     public void salvaDocumento(String nomeDocumento) throws FileNotFoundException, IOException {

@@ -23,8 +23,10 @@ public class Hooks {
     @Before
     public void inicializarDriver() throws Exception{
         driverFactory.inicializarDriver();
-        wordEvidence.criandoParagrafo();
         wordEvidence.criandoCabecalho();
+        wordEvidence.inserindoConteudoCabecalho();
+        wordEvidence.quebrandoParagrafo();
+        wordEvidence.criandoTituloDocumento();
     }
 
     @After
