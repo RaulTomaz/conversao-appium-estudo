@@ -8,8 +8,11 @@ import org.apache.poi.wp.usermodel.HeaderFooterType;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblWidth;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
 
 import java.io.*;
+import java.math.BigInteger;
 
 public class WordEvidence extends DriverFactory {
 
@@ -17,6 +20,7 @@ public class WordEvidence extends DriverFactory {
     XWPFHeader cabecalho = null;
     XWPFParagraph paragrafo = null;
     XWPFRun run = null;
+    XWPFTable tableOne = null;
 
     public void criandoCabecalho(){
         cabecalho = wordEvidence.createHeader(HeaderFooterType.DEFAULT);
@@ -42,7 +46,23 @@ public class WordEvidence extends DriverFactory {
         run.setBold(true);
     }
 
-    public void salvaDocumento(String nomeDocumento) throws FileNotFoundException, IOException {
+    public void criaTabela(){
+        tableOne = wordEvidence.createTable();
+        CTTblWidth larguraTabela = tableOne.getCTTbl().addNewTblPr().addNewTblW();
+        larguraTabela.setType(STTblWidth.DXA);
+        larguraTabela.setW(BigInteger.valueOf(9000));
+//        XWPFTableRow tableOneRowTwo = tableOne.createRow();
+//        tableOneRowTwo.getCell(0).setText("Data1");
+//        tableOneRowTwo.getCell(1).setText("Data2");
+    }
+
+    public void insereConteudoTabela(String chaveTexto, String valorTexto){
+        XWPFTableRow tableOneRowOne = tableOne.getRow(0);
+        tableOneRowOne.getCell(0).setText(chaveTexto);
+        tableOneRowOne.addNewTableCell().setText(valorTexto);
+    }
+
+    public void salvaDocumento(String nomeDocumento) throws IOException {
         FileOutputStream os = new FileOutputStream(new File("src/test/resources/evidencias/"+ nomeDocumento + ".docx"));
         wordEvidence.write(os);
     }

@@ -20,13 +20,20 @@ public class Hooks {
     WordEvidence wordEvidence = new WordEvidence();
     DateFormat dataEvidencia = new SimpleDateFormat("dd-MM-yyy_HH_mm_ss");
 
-    @Before
-    public void inicializarDriver() throws Exception{
-        driverFactory.inicializarDriver();
+    @Before(order = 0)
+    public void criaDocumentoEvidencia() throws Exception {
         wordEvidence.criandoCabecalho();
         wordEvidence.inserindoConteudoCabecalho();
         wordEvidence.quebrandoParagrafo();
         wordEvidence.criandoTituloDocumento();
+
+    }
+
+    @Before(order = 1)
+    public void inicializarDriver(){
+        driverFactory.inicializarDriver();
+        wordEvidence.criaTabela();
+        wordEvidence.insereConteudoTabela("Nome: ", "valor.");
     }
 
     @After
@@ -34,8 +41,6 @@ public class Hooks {
         wordEvidence.salvaDocumento("conversao-appium" + dataEvidencia.format(new Date()));
         wordEvidence.fechaDocumento();
         driverFactory.getDriver().quit();
-
-
     }
 
     @AfterStep
