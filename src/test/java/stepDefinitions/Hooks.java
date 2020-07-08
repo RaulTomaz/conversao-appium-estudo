@@ -6,6 +6,7 @@ import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import utils.EvidenciaWord;
@@ -24,23 +25,26 @@ public class Hooks {
 
 
     @Before
-    public void inicializarDriver() {
+    public void inicializarDriver(){
+        evidenciaWord.abreDocumento();
         driverFactory.inicializarDriver();
     }
 
     @After
-    public void eliminarDriver() {
+    public void eliminarDriver() throws IOException {
+        evidenciaWord.fecharDocumento("evidencia-word" + dataEvidencia.format(new Date()));
         driverFactory.getDriver().quit();
     }
 
     @AfterStep
-    public void tirarScreenshot(Scenario scenario) {
+    public void tirarScreenshot(Scenario scenario) throws IOException, InvalidFormatException {
 //        if (scenario.isFailed())
 //        {
 //            byte[] screenshot = ((TakesScreenshot) driverFactory.getDriver()).getScreenshotAs(OutputType.BYTES);
 //            scenario.embed(screenshot, "image/png", scenario.getName());
 //        }
-        evidenciaWord.tirarScreenshot("screenshot" + dataEvidencia.format(new Date()));
+//        evidenciaWord.tirarScreenshot("screenshot" + dataEvidencia.format(new Date()));
+        evidenciaWord.salvarScreenshotWord("screenshot" + dataEvidencia.format(new Date()));
     }
 
 }
