@@ -23,15 +23,23 @@ public class Hooks {
     DateFormat dataEvidencia = new SimpleDateFormat("dd-MM-yyyy_HH_mm_ss");
     EvidenciaWord evidenciaWord = new EvidenciaWord();
 
-
-    @Before
-    public void inicializarDriver(){
+    @Before(order = 0)
+    public void criarDocumentoEvidencia() throws Exception {
         evidenciaWord.abreDocumento();
+//        evidenciaWord.criarCabecalho();
+//        evidenciaWord.inserirConteudoCabecalho();
+        evidenciaWord.quebrarParagrafo();
+    }
+
+    @Before(order = 1)
+    public void inicializarDriver(){
+        evidenciaWord.criarTabela();
         driverFactory.inicializarDriver();
     }
 
     @After
-    public void eliminarDriver() throws IOException {
+    public void eliminarDriver(Scenario scenario) throws IOException {
+        evidenciaWord.insereConteudoTabela(scenario, "Gabriel Stabile");
         evidenciaWord.fecharDocumento("evidencia-word" + dataEvidencia.format(new Date()));
         driverFactory.getDriver().quit();
     }
