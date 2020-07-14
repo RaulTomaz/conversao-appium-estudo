@@ -23,19 +23,20 @@ public class Hooks {
     DateFormat dataEvidencia = new SimpleDateFormat("dd-MM-yyyy_HH_mm_ss");
     EvidenciaWord evidenciaWord = new EvidenciaWord();
 
-
     @Before
-    public void inicializarDriver() throws IOException, InvalidFormatException {
+    public void inicializarDriver(Scenario scenario) throws IOException, InvalidFormatException {
+        driverFactory.inicializarDriver();
         evidenciaWord.abreDocumento();
         evidenciaWord.criarCabecalho();
         evidenciaWord.inserirConteudoCabecalho();
         evidenciaWord.criarTabela();
-        driverFactory.inicializarDriver();
+        evidenciaWord.insereConteudoTabela(scenario, "Gabriel");
     }
 
     @After
     public void eliminarDriver(Scenario scenario) throws IOException {
-        evidenciaWord.insereConteudoTabela(scenario, "Gabriel");
+        evidenciaWord.criarParagrafo();
+        evidenciaWord.testeStatus(scenario);
         evidenciaWord.fecharDocumento("evidencia-word" + dataEvidencia.format(new Date()));
         driverFactory.getDriver().quit();
     }
@@ -49,6 +50,7 @@ public class Hooks {
 //        }
 //        evidenciaWord.tirarScreenshot("screenshot" + dataEvidencia.format(new Date()));
         evidenciaWord.salvarScreenshotWord("screenshot" + dataEvidencia.format(new Date()));
+        evidenciaWord.inserirComentarioScreenshot(scenario);
     }
 
 }

@@ -1,5 +1,6 @@
 package utils;
 
+import core.CommonsBasePage;
 import core.DriverFactory;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.lv.Un;
@@ -56,13 +57,16 @@ public class EvidenciaWord extends DriverFactory {
         segundaLinha.getCell(0).setText("Nome do QA");
         segundaLinha.getCell(1).setText(nomeQa);
 
-        XWPFTableRow terceiraLinha = tabela.createRow();
-        terceiraLinha.getCell(0).setText("Status do teste");
-        terceiraLinha.getCell(1).setText(scenario.getStatus().toString());
-
         XWPFTableRow quartaLinha = tabela.createRow();
         quartaLinha.getCell(0).setText("Plataforma de execução");
         quartaLinha.getCell(1).setText(getDriver().getPlatformName());
+    }
+
+    public void testeStatus(Scenario scenario){
+        criarTabela();
+        XWPFTableRow tabelaStatus = tabela.getRow(0);
+        tabelaStatus.getCell(0).setText("resultado do teste");
+        tabelaStatus.addNewTableCell().setText(scenario.getStatus().toString());
     }
 
     public void criarParagrafo(){
@@ -77,6 +81,24 @@ public class EvidenciaWord extends DriverFactory {
         FileInputStream caminhoImagens = new FileInputStream("src/test/resources/evidencias/screenshots/" + nomeScreenshot + ".png");
         run.addPicture(caminhoImagens, XWPFDocument.PICTURE_TYPE_PNG, null, Units.toEMU(200), Units.toEMU(450));
         run.addBreak();
+    }
+
+    public void inserirComentarioScreenshot(Scenario scenario){
+        tabela = null;
+        criarTabela();
+        XWPFTableRow primeiraLinha = tabela.getRow(0);
+        primeiraLinha.getCell(0).setText("Observações");
+        if (scenario.isFailed())
+        {
+            primeiraLinha.addNewTableCell().setColor("FF0000");
+            primeiraLinha.getCell(1).setText("O passo falhou");
+        }
+        else
+        {
+            primeiraLinha.addNewTableCell().setText("O passo foi feito com sucesso");
+        }
+
+
     }
 
     public void fecharDocumento(String nomeDocumento) throws IOException{

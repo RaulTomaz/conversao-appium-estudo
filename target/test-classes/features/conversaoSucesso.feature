@@ -11,4 +11,4 @@
     Quando seleciono a opcao de centimetros
     E seleciono a opcao de metros
     E digito "1000" pelo teclado de numeros
-    Entao a conversao de centimetros para metros e exibida com o valor "10"
+    Entao a conversao de centimetros para metros e exibida com o valor "11"
