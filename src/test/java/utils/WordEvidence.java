@@ -73,8 +73,8 @@ public class WordEvidence extends DriverFactory {
             File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshot, new File("src/test/resources/evidencias/screenshots/"+ nomeImagem +".png"));
             FileInputStream is = new FileInputStream("src/test/resources/evidencias/screenshots/"+ nomeImagem + ".png");
-//            XWPFParagraph paragraph = wordEvidence.createParagraph();
-//            XWPFRun run = paragraph.createRun();
+            XWPFParagraph paragraph = wordEvidence.createParagraph();
+            XWPFRun run = paragraph.createRun();
 //            run.addBreak();
             run.addPicture(is, XWPFDocument.PICTURE_TYPE_PNG, nomeImagem, Units.toEMU(200), Units.toEMU(350)); // 200x200 pixels
             is.close();
