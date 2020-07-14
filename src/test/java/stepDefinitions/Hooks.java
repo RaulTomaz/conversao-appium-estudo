@@ -25,13 +25,17 @@ public class Hooks {
 
 
     @Before
-    public void inicializarDriver(){
+    public void inicializarDriver() throws IOException, InvalidFormatException {
         evidenciaWord.abreDocumento();
+        evidenciaWord.criarCabecalho();
+        evidenciaWord.inserirConteudoCabecalho();
+        evidenciaWord.criarTabela();
         driverFactory.inicializarDriver();
     }
 
     @After
-    public void eliminarDriver() throws IOException {
+    public void eliminarDriver(Scenario scenario) throws IOException {
+        evidenciaWord.insereConteudoTabela(scenario, "Gabriel");
         evidenciaWord.fecharDocumento("evidencia-word" + dataEvidencia.format(new Date()));
         driverFactory.getDriver().quit();
     }
